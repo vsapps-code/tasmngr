@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "header.h": "c"
+    },
+    "cpp-check-lint.cppcheck.--language=": "c",
+    "cpp-check-lint.cppcheck.--std_c=": "c99",
+    "C_Cpp.errorSquiggles": "disabled",
+    "cpp-check-lint.cppcheck.--suppress=": [
+        "whitespace/braces",
+        "unmatchedSuppression",
+        "missingIncludeSystem",
+        "include_subdir",
+    ]
+}

@@ -1,0 +1,22 @@
+/*! @page srs Software Requirements Specification
+
+This is an example Software Requirements Specification (SRS), illustrating the typical structure and the use of _Spexygen_ commands to define the __traceable__ requirement work artifacts.
+
+@note
+Try clicking on the provided traceability links as well as _searching_ the UIDs in the Doxygen "search" box.
+
+@section srs-def Concepts &amp; Definitions
+Description of concepts and definitions..
+
+@section srs_req Requirements
+Definitions of formal requirements specifications.
+
+@subsection SRS_EXA_BOOT_01 SRS_EXA_BOOT_01
+Software shall boot itself.
+@par Description
+The boatloader shall read the memory from SRAM 1 and copy to the RAM for the boot
+@par Test Traceability
+- @ref TS_BOOT_00
+@par Code Traceability
+- @ref boot
+*/

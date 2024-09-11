@@ -1,0 +1,22 @@
+/*! @page ts Software Test Specification
+
+This is an example Test Specification (TS), illustrating the definitions of the tests
+
+@note
+Try clicking on the provided traceability links as well as _searching_ the UIDs in the Doxygen "search" box.
+
+@section sts-def Concepts &amp; Definitions
+Description of concepts and definitions..
+
+@section sts_tests Tests
+Definitions of formal test specifications.
+
+@subsection TS_BOOT_00 TS_BOOT_00
+Boot up test.
+@par Description
+This test tests the booting sequence of the software implemented by 
+@par Requirements Traceability
+- @ref SRS_EXA_BOOT_01
+@par Test Code Traceability
+- @ref TUN_Test_Boot_01
+*/
