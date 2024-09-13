@@ -8,7 +8,7 @@ LIBS = -lm
 DEFS = #-DDEBUG_FLAG -DEXPERIMENTAL=0
 
 # The final executable program file, i.e. name of our program
-BIN = VSAPPS
+BIN = AppExample
 
 # Build directory for the final executable
 BUILD_DIR = ../build
