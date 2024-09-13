@@ -15,26 +15,38 @@
 #include "VSAPPS_globals.h"
 #include "LOGGER.h"
 #include "TASKMNGR.h"
+#include "TASKMNGR_config.h"
 
 /* Self module import */
 
 /* Private macros and constants */
 
 /* Private types */
+struct TaskData;
+{
+    uint16_t push_timestamp;
+    uint16_t pop_timestamp;
+    uint16_t proccessed_timestamp;
+    uint16_t deadline_total;
+    uint16_t wcet_push_to_pop;
+    uint16_t wcet_execution;
+    uint16_t wcet_total;
+    uint16_t deadline_miss_count;
+}TaskData;
+
 
 /* Private globals */
-/* TASKQUE configuration */
-STATIC const struct taskmngr_LaneInfo taskmanager_TASK_CONF[] =
+STATIC const taskmanager_TASK_CONF tasks_config[taskmngr_TOTAL_TASK_COUNT] =
 {
 /*      Priority                                                   */       
 /*      |               Queue size                                       */
 /*      |               |       Adress of Taskdata buffer                    */    
 /*      |               |       |                                            */
 
-        {taks_id, 0,             10,     &lane_data[0],  taks_deadline, task_function, timeout_function};
-        {1,             5,      &lane_data[0]  };
-        {2,             5,      &lane_data[0]  };
-        {NULL,          NULL,   NULL           };       /* table termination */
+        {E_TaskID.TASK_PERIODIC, 0,            10,     &lane_data[0], task_function};
+        {E_TaskID.TASK_SPORADIC  ,             5,      &lane_data[0]  };
+        {E_TaskID.TASK_FAST      ,             5,      &lane_data[0]  };
+        {E_TaskID.TASK_IDLE      ,             5,      &lane_data[0]  };
 }
 
 /* Private functions */
@@ -45,6 +57,8 @@ void* periodic_event_feed_example(void *vargp)
     while(1)
     {
         /* Create random text consists of 100 chars */
+
+        /* get the time stamp for the data */
 
         tasmngr_push_task(id, &periodic_event_payload);
         usleep(100 * 1000); /* 100 ms */
@@ -57,7 +71,7 @@ void* task_function_for_periodic_events(void* payload, taskmngr_TaskData stats)
     logger_log(LOG_INFO, "Periodic event called: call latency: \n");
 }
 
-void* timeout_function(taskmngr_E_TaskIDs taskId, taskmngr_TaskData stats)
+void* timeout_function(E_TaskID taskId, taskmngr_TaskData stats)
 {
     logger_log(LOG_WARNING, "!! Deadline missed for: call latency: \n");
 }
@@ -72,7 +86,7 @@ int main()
     
     /* Configuration of task manager */ 
     /* !! needs to be called before the first event !! */
-    tasmngr_setup(&taskmanager_TASK_CONF);
+    tasmngr_setup(&tasks_config);
 
     /* Event feeder threads */
     pthread_create(&thread_periodic, NULL, periodic_event_feed_example, NULL);

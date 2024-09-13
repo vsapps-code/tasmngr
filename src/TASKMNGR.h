@@ -1,17 +1,24 @@
-/** @file: TASKQUE.h
+/** @file: TASKMNGR.h
  * ------------------------------------------------------------------------------
- *  @brief Function prototypes for queue (FIFo) implementaion kept in a 
- *         ring buffer datastructure.
+ *  @brief Function prototypes for Task Manager implementaion
  *
- *  @details Queue implementaion as ring buffer (a.k. circular buffer) is an 
- *  object implementaion to keep/manage any user data type (including user 
- *  defined structures) in an array whose memory needs to be supplied by the 
- *  caller. The implementation is type agnostic. Push and Pop operations deals 
- *  with one element only.  Implementaion is for one producer thread and one 
- *  consumer thread. For this use case there is no locking/critical section usage 
- *  is required.    
+ *  @details Task Manager is a event based task management implementation for
+ *           hard realtime systems, for those RTOS is not suitable. 
+ *           Tasks can be pushed by periodic, sporadic functions or interrups. 
+ *           The dispacher function pulls the task which has the highest priority
+ *           (lowest in number) and executes it until the end. 
+ *           There is no preemtion. In case an urgent task is received during the 
+ *           execution of a low priority task, it has to be wait until the low 
+ *           priority task finishes its execution.  Therefore, all tasks should 
+ *           be implemented as nonblocking. Since only one task executed in one 
+ *           cyle there is no overhead coming from shared variable protection 
+ *           mechanisms. The purpose of Task Manager library is maximaxing the 
+ *           CPU utilization while executing the time critical jobs with 
+ *           minumum latency. Thanks to determisitic structure of the library 
+ *           timing analysis of the systems are expected to be simpler and having 
+ *           less uncertainity.  
  *
- *  @author Volkan Salma <volkan.salma@vsapps.nl>,   Start Date: 8 Sep 2026
+ *  @author Volkan Salma <volkan.salma@vsapps.nl>,   Start Date: 13 Sep 2026
  *
  *  Major Changes: None
  *  
@@ -25,6 +32,7 @@
 
 /* Application headers */
 #include "VSAPPS_globals.h"
+#include "TASKMNGR_config.h"
 
 /* EXTERN macro: */
 #ifdef __TASKMNGR_IMPORT__
@@ -34,9 +42,18 @@
 #endif
 
 /* Constants */
-#define taskmngr_PRIORTY_LEVELS  (5) /* How many seperate priority levels exist */
 
 /* Types */
+typedef enum E_TaskID;
+
+typedef struct taskmanager_TASK_CONF
+{
+    E_TaskID id;            /* unique id of the task */
+    uint8_t priority;       /* priority of the task 0 is the highest priority */
+    uint8_t que_size;       /* how many tasks can be kept before processing */
+    size_t  payload_size;   /* the size of one payload data item */
+    void    *p_payload_data; /* starting address of payload data array for a task */
+}taskmanager_TASK_CONF;
 
 /* Structures */
 
@@ -54,21 +71,8 @@ struct TaskConf
     void*   data;               /* pointer to the payload task data */
     void*   data_unit_size;     /* size of one payload data */
     void*   exe_function;       /* task function to be executed */
-    void*   time_out_func;      /* timeout function to be executed in deadline exceed*/
 };
 
-struct TaskData;
-{
-    uint16_t push_timestamp;
-    uint16_t pop_timestamp;
-    uint16_t proccessed_timestamp;
-    uint16_t deadline_total;
-    uint16_t wcet_push_to_pop;
-    uint16_t wcet_execution;
-    uint16_t wcet_total;
-    uint16_t deadline_miss_count;
-    uint8_t last_index_task_payload;
-}TaskData;
 
 struct typedef TaskQue
 {
@@ -77,7 +81,13 @@ struct typedef TaskQue
 
 
 /* Function prototypes */
+EXTERN void tasmngr_setup();
+
+EXTERN void taskmngr_dispatch();
+
 EXTERN bool taskmngr_push_task(void* TaskData, uint8_t priority);
 
-EXTERN bool taskmngr_pop_task(void* TaskData);
+#undef __TASKMNGR_IMPORT__
+#undef EXTERN
+#endif // #define __TASKMNGR_H__
 
