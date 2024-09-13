@@ -94,3 +94,6 @@ bool boot(int a)
 {
     return true;
 }
+
+        logger_log(LOG_WARNING,
+                    "ring buffer is full, write operation is skipped");

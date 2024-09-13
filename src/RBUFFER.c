@@ -1,6 +1,8 @@
 /** @file: rbuffer.c
  * ------------------------------------------------------------------------------
- *  @brief Ring buffer implementaion. 
+ *  @brief Function implementaion for a queue (FIFO) implementaion kept in a 
+ *         ring buffer datastructure.
+ * 
  *  @author Volkan Salma
  *
  *  Copyright (C) 2024, VSApps Engineering Solutions, www.vsapps.nl
@@ -10,7 +12,6 @@
 /* Standard headers */
 
 /* Application headers */
-#include "LOGGER.h"
 
 #define __RBUFFER_IMPORT__
 #include "RBUFFER.h"
@@ -24,28 +25,6 @@
 /* Private functions */
 
 /* Implementation of public functions */
-void vssapps_memcpy(void *dest, void *src, size_t n)
-{
-    uint8_t *p_src = (uint8_t*)src;
-    uint8_t *p_dest = (uint8_t*)dest;
-
-    for (int i = 0; i < n; i++)
-    {
-        p_dest[i] = p_src[i];
-    }
-}
-
-void* vssapps_memset(void* s, int c,  uint16_t len)
-{
-    uint8_t *p = s;
-
-    while(len--)
-    {
-        *p++ = (uint8_t)c;
-    }
-    return s;
-}
-
 void rbuffer_init(p_RBuffer me,
                 void* p_buffer_array,
                 uint8_t elem_size_byte,
@@ -74,8 +53,6 @@ bool rbuffer_push_one_elem(p_RBuffer me,
     {
         /* head reaches to tail, do not write */
         data_pushed = false;
-        logger_log(LOG_WARNING,
-                    "ring buffer is full, write operation is skipped");
     } 
     else 
     {

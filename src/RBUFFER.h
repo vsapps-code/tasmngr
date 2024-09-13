@@ -1,6 +1,7 @@
 /** @file: rbuffer.h
  * ------------------------------------------------------------------------------
- *  @brief Function prototypes for ring buffer implementaion.
+ *  @brief Function prototypes for queue (FIFo) implementaion kept in a 
+ *         ring buffer datastructure.
  *
  *  @details Queue implementaion as ring buffer (a.k. circular buffer) is an 
  *  object implementaion to keep/manage any user data type (including user 
@@ -33,9 +34,6 @@
 #endif
 
 /* Constants */
-#define rbuffer_MAX_BUF_LEN (4*1024)
-#define rbuffer_RED_MASK    0xff0000
-#define rbuffer_GREEN_MASK  0x00ff00
 
 /* Types */
 enum rbuffer_Direction {
@@ -72,15 +70,38 @@ typedef struct RBuffer
  *   @return: void
  */
 EXTERN void rbuffer_init(p_RBuffer p_RBuffer,
-                void *p_buffer_array,
-                uint8_t elem_size,
-                uint8_t buffer_size);
+                        void *p_buffer_array,
+                        uint8_t elem_size,
+                        uint8_t buffer_size);
 
+/*
+ * Function: rbuffer_push_one_elem
+ * ------------------------------------------------------------------------------
+ *   @brief Pushes one element to the ringbuffer object
+ *
+ *   @param me[in]:         pointer of RBuffer ringbuffer object
+ *   @param p_data_in[in]:  pointer to the structure to be pusshed to ring buffer
+ *
+ *   @return: bool:         returns true in case the push is successfull
+ *                          returns false in case the ring buffer is full and 
+ *                                  the data could not be inserted
+ */
 EXTERN bool rbuffer_push_one_elem(p_RBuffer me,
-                        void *p_data_in);
+                                void *p_data_in);
 
+/*
+ * Function: rbuffer_pop_one_elem
+ * ------------------------------------------------------------------------------
+ *   @brief Pushes one element to the ringbuffer object
+ *
+ *   @param me[in]:         pointer of RBuffer ringbuffer object
+ *   @param p_data_out[in]: pointer to the structure to be pusshed to ring buffer
+ *
+ *   @return: bool:         returns true there is data and pop is successfull
+ *                          returns false if there is no data to be popped
+ */
 EXTERN bool rbuffer_pop_one_elem(p_RBuffer me,
-                        void *p_data_out);
+                                void *p_data_out);
 
 #undef __RBUFFER_IMPORT__
 #undef EXTERN
