@@ -3,5 +3,5 @@
 doc/html/
 doc/latex/
 .venv/
-build/
+build/*
 

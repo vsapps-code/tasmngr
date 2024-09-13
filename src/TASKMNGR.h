@@ -36,19 +36,6 @@
 /* Constants */
 #define taskmngr_PRIORTY_LEVELS  (5) /* How many seperate priority levels exist */
 
-/* TASKQUE configuration */
-STATIC const struct taskmngr_LaneInfo taskque_CONF[] =
-{
-/*      Lane priority                                               */       
-/*      |                Lane size                                  */
-/*      |                |       Adress of ring buffer array        */    
-/*      |                |       |                                  */
-        {0,             ,5      ,&lane_data[0]  };
-        {0,             ,5      ,&lane_data[0]  };
-        {0,             ,5      ,&lane_data[0]  };
-        {NULL,          NULL,   NULL            }; /* table termination */
-}
-
 /* Types */
 
 /* Structures */
@@ -79,6 +66,7 @@ struct TaskData;
     uint16_t wcet_push_to_pop;
     uint16_t wcet_execution;
     uint16_t wcet_total;
+    uint16_t deadline_miss_count;
     uint8_t last_index_task_payload;
 }TaskData;
 
