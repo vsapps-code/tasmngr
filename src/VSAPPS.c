@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "vssapps_globals.h"
+#include "VSAPPS_globals.h"
 #include "RBUFFER.h"
 
 #define TEST_RBUFFER_SIZE   10

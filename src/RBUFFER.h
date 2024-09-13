@@ -24,7 +24,7 @@
 /* Standard headers */
 
 /* Application headers */
-#include "vssapps_globals.h"
+#include "VSAPPS_globals.h"
 
 /* EXTERN macro: */
 #ifdef __RBUFFER_IMPORT__

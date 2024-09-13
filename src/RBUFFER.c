@@ -57,7 +57,7 @@ bool rbuffer_push_one_elem(p_RBuffer me,
     else 
     {
         /* there is still place, write one element copying byte by byte */
-        vssapps_memcpy(me->p_data + (head_index * elem_size_byte),
+        vsapps_memcpy(me->p_data + (head_index * elem_size_byte),
                     p_data_in, elem_size_byte);
 
         /* update the head index */
@@ -87,7 +87,7 @@ bool rbuffer_pop_one_elem(p_RBuffer me,
     else
     {
         /* there is still data to be read, one data can be read */
-        vssapps_memcpy(p_data_out,
+        vsapps_memcpy(p_data_out,
                         (void*)(me->p_data + (tail_index * elem_size_byte)),
                         elem_size_byte);
 
