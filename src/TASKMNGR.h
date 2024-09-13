@@ -18,8 +18,8 @@
  *  @copyright Copyright (C) 2024, VSApps Engineering Solutions, www.vsapps.nl
  * ------------------------------------------------------------------------------
  */
-#ifndef __TASKQUE_H__
-#define __TASKQUE_H__
+#ifndef __TASKMNGR_H__
+#define __TASKMNGR_H__
 
 /* Standard headers */
 
@@ -27,17 +27,17 @@
 #include "VSAPPS_globals.h"
 
 /* EXTERN macro: */
-#ifdef __TASKQUE_IMPORT__
+#ifdef __TASKMNGR_IMPORT__
     #define EXTERN
 #else
     #define EXTERN extern
 #endif
 
 /* Constants */
-#define taskque_PRIORTY_LEVELS  (5) /* How many seperate priority levels exist */
+#define taskmngr_PRIORTY_LEVELS  (5) /* How many seperate priority levels exist */
 
 /* TASKQUE configuration */
-STATIC const struct taskque_LaneInfo taskque_CONF[] =
+STATIC const struct taskmngr_LaneInfo taskque_CONF[] =
 {
 /*      Lane priority                                               */       
 /*      |                Lane size                                  */
@@ -54,12 +54,12 @@ STATIC const struct taskque_LaneInfo taskque_CONF[] =
 /* Structures */
 
 /* Global variables */
-struct taskque_LaneInfo
+struct taskmngr_LaneInfo
 {
     uint8_t priority;              /* assigned priority of a lane, 0 is the highest priority */
     uint8_t lane_length;           /* how many tasks can be kept in the task que */
     void    *ring_buffer_array;    /* pointer to the array which keeps the task object data */
-}taskque_TaskInfo;
+}taskmngr_TaskInfo;
 
 
 struct TaskConf
@@ -89,7 +89,7 @@ struct typedef TaskQue
 
 
 /* Function prototypes */
-EXTERN bool taskque_push_task(void* TaskData, uint8_t priority);
+EXTERN bool taskmngr_push_task(void* TaskData, uint8_t priority);
 
-EXTERN bool taskque_pop_task(void* TaskData);
+EXTERN bool taskmngr_pop_task(void* TaskData);
 

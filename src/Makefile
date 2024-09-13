@@ -17,7 +17,7 @@ BUILD_DIR = ../build
 COMPILER = gcc #$(CC) 
 
 # Object files from which $BIN depends
-OBJS = LOGGER.o RBUFFER.o
+OBJS = LOGGER.o RBUFFER.o VSAPPS_helpers.o
 
 # This default rule compiles the executable program
 $(BIN): $(OBJS) $(BIN).c

@@ -12,6 +12,7 @@
 /* Standard headers */
 
 /* Application headers */
+#include "VSAPPS_helpers.h"
 
 #define __RBUFFER_IMPORT__
 #include "RBUFFER.h"
@@ -36,7 +37,7 @@ void rbuffer_init(p_RBuffer me,
     me->buffer_size = buffer_size;
     me->head_index = 0;
     me->tail_index = 0;
-    vssapps_memset(p_buffer_array, -1, (buffer_size * elem_size_byte));
+    vsapps_memset(p_buffer_array, -1, (buffer_size * elem_size_byte));
 }
 
 bool rbuffer_push_one_elem(p_RBuffer me,

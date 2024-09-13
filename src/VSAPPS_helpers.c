@@ -29,17 +29,17 @@ void vsapps_memcpy(void *p_dest, void *p_src, size_t length)
     uint8_t *p_src_ = (uint8_t*)p_src;
     uint8_t *p_dest_ = (uint8_t*)p_dest;
 
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < length; i++)
     {
         p_dest_[i] = p_src_[i];
     }
 }
 
-void vsapps_memset(void *p_dest , uint8_t value,  uint16_t len);
+void vsapps_memset(void *p_dest , uint8_t value,  uint16_t len)
 {
     uint8_t *p = p_dest;
 
-    while( en-- )
+    while( len-- )
     {
         *p++ = value;
     }
