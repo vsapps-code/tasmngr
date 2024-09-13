@@ -67,7 +67,6 @@ void* periodic_event_feed_example(void *vargp)
 
 void* task_function_for_periodic_events(void* payload, taskmngr_TaskData stats)
 {
-
     logger_log(LOG_INFO, "Periodic event called: call latency: \n");
 }
 
